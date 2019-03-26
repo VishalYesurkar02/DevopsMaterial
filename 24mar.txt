@@ -1,0 +1,15 @@
+
+
+----------------------AWS Lambda--------------------------
+https://www.bogotobogo.com/DevOps/AWS/aws-Lambda-Nodejs-API-Gateway.php
+
+
+https://help.dreamhost.com/hc/en-us/articles/115000695551-Installing-and-using-virtualenv-with-Python-3
+
+which virtualenv /home/username/opt/python-3.6.2/bin/virtualenv
+
+
+Linux Command Cheat Sheet- https://learncodethehardway.org/unix/bash_cheat_sheet.pdf                        
+vi Command Cheat sheet - http://ryanstutorials.net/linuxtutorial/cheatsheetvi.php                        
+For non linux background people plz practice the commands.
+
