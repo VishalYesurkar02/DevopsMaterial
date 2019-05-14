@@ -1,0 +1,186 @@
+https://github.com/nvn17git/nvnshoppingcart
+
+---------------Maven Installation--------------------
+java -version
+mvn -v
+apt install maven
+mvn -v
+which maven
+which mvn
+mvn -v
+sudo apt-get remove maven3
+sudo apt-get remove maven
+sudo add-apt-repository "deb http://ppa.launchpad.net/natecarlson/maven3/ubuntu precise main"
+sudo apt-get update
+sudo apt-get install maven3
+sudo ln -s /usr/share/maven3/bin/mvn /usr/bin/mvn
+which 
+echo MAVEN_HOME
+echo $MAVEN_HOME
+echo $JAVA_HOME
+which java
+which mvn
+java -version
+mvn -version
+echo $$
+echo $MAVEN_HOME
+export MAVEN_HOME
+export MAVEN_HOME=/usr/share/maven3
+echo $MAVEN_HOME
+
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+
+-----------------Boto3 Install- --------------------
+sudo apt-get install wget
+wget https://bootstrap.pypa.io/get-pip.py
+sudo apt-get install gcc libffi-devel python-devel openssl-devel
+sudo python get-pip.py
+sudo pip install boto
+
+
+
+
+
+- name: print IP address of the machine
+  debug: var=ansible_all_ipv4_addresses
+  debug: var=ansible_default_ipv4.address
+  
+  
+ ------------main.yml
+ 
+ # tasks file for customrole
+- name: print ip address of the machine
+  debug: var=ansible_all_ipv4_addresses
+
+
+---------------site.yml
+
+---
+- name: Create a new Demo EC2 instance
+  hosts: localhost
+  gather_facts: true
+  connection: local
+  roles:
+    - customrole
+    
+    
+
+  site.yml***
+  ---
+- name: Create a new EC2 instance
+  hosts: localhost
+  roles:
+      - customrole
+
+
+
+https://github.com/VishalYesurkar02/ss
+
+===================Command 20 April==============
+  1  cd /var/lib/jenkins/workspace/demo
+    2  ls
+    3  cd ..
+    4  ls
+    5  cd /etc/yum.repos.d
+    6  vi /etc/yum.repos.d/vi ansible.repo
+    7  cd /etc/yum.repos.d
+    8  cd /etc/
+    9  ls
+   10  mkdir yum.repos.d
+   11  cd yum.repos.d/
+   12  vi ansible.repo
+   13  ls
+   14  cd /opt/
+   15  ls
+   16  cd yum.repos.d/
+   17  cd /etc/yum.repos.d
+   18  ls
+   19  yum update
+   20  apt install yum
+   21  sudo apt update -y
+   22  apt list --upgradable
+   23  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   24  apt install rpm
+   25  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   26  ls
+   27  sudo apt install ansible
+   28  ls
+   29  ansible --version
+   30  cd /etc/
+   31  vi ansible/hosts
+   32  cd /opt/
+   33  ls
+   34  vi ~.ssh/server1.pem
+   35  cd ~/.ssh
+   36  ls
+   37  vi server1.pem
+   38  ls
+   39  vi /etc/ansible/hosts
+   40  ansible servers -m raw"uptime"
+   41  chmod 600 ~/.ssh/server1.pem
+   42  ansible servers -m raw"uptime"
+   43  ansible servers -m raw -a "uptime"
+   44  ansible servers -m raw -a "yum update -y"
+   45  ansible servers --sudo  -m raw -a "yum update -y"
+   46  mkdir -p /opt/ansibel-demo && cd /opt/ansibel-demo
+   47  vi install-http.yaml
+   48  ansible-playbook install-http.yaml
+   49  vi install-http.yaml
+   50  cat /var/lib/jenkins/secrets/initialAdminPassword
+   51  cd /opt/ansibel-demo/
+   52  ls
+   53  ansible-playbook install-http.yaml
+   54  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpmrpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   55  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   56  ls
+   57  cd ~/.ssh
+   58  ls
+   59  ssh-keygen
+   60  ls
+   61  cat ~/.ssh/id_rsa.pub
+   62  chmod 700 ~/.ssh
+   63  ansible -m ping all
+   64  ansible -m shell -a 'free -m' all
+   65  ansible-playbook install-http.yaml
+   66  cd /opt/ansibel-demo/
+   67  ansible-playbook install-http.yaml
+   68  cat install-http.retry
+   69  vi repro.yaml
+   70  ansible-playbook repro.yaml
+   71  apt rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   72  apt -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   73  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   74  cd /etc/ansible/
+   75  ls
+   76  cd /opt
+   77  sudo apt update -y
+   78  sudo apt-get update -y
+   79  sudo apt-get install openjdk-8-jdk
+   80  wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+   81  echo "deb http://pkg.jenkins-ci.org/debian binary/" | sudo tee -a /etc/apt/sources.list.d/jenkins.list
+   82  sudo apt-get update
+   83  sudo apt-get install jenkins
+   84  service jenkins status
+   85  service jenkins start
+   86  service jenkins status
+   87  jenkins --version
+   88  ls
+   89  cd /etc/ansible/
+   90  ls
+   91  cat ansible.cfg
+   92  apt-get install openjdk-8-jdk
+   93  systemctl start jenkins
+   94  systemctl status jenkins
+   95  systemctl restart jenkins
+   96  systemctl status jenkins
+   97  cd /opt/ansible-dev/
+   98  ls
+   99  cd ..
+  100  ls
+  101  cd ansible-dev/roles/tomcat_aws/
+  102  ls
+  103  cd tasks/
+  104  ls
+  105  less aws-ec2.yml
+  106  history

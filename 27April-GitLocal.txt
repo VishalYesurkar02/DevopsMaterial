@@ -1,0 +1,48 @@
+------------------Git commands----------------------
+git clone https://github.com/maheshkharwadkar/starter-web.git
+1.  git status
+
+2.  git checkout -b myfeature
+
+   Changes to humans.txt
+
+3.  git commit -am "Saying Thanks to Students"
+
+4.  git checkout master
+
+
+   Changes to README.md
+
+5.  git commit -am "Changes to master for rebasing example" 
+
+6.  git log --oneline --decorate --all --graph
+
+7.  git checkout myfeature
+
+8.  git rebase master
+
+9.  git log --oneline --decorate --all --graph
+
+   Changes to README.md
+
+10. git commit -am "Commit after rebasing"
+
+11. git log --oneline --decorate --all --graph
+
+12. git checkout master
+
+   show to README.md
+
+13. git diff master myfeature
+
+14. git merge myfeature 
+
+15. git log --oneline --decorate --all --graph
+
+16. git branch -d myfeature
+
+sudo update-alternatives --config java----check for java current version is running and to modify changes
+
+
+
+
