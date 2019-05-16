@@ -1,0 +1,30 @@
+---------------Maven Installation--------------------
+java -version
+mvn -v
+apt install maven
+mvn -v
+which maven
+which mvn
+mvn -v
+sudo apt-get remove maven3
+sudo apt-get remove maven
+sudo add-apt-repository "deb http://ppa.launchpad.net/natecarlson/maven3/ubuntu precise main"
+sudo apt-get update
+sudo apt-get install maven3
+sudo ln -s /usr/share/maven3/bin/mvn /usr/bin/mvn
+which 
+echo MAVEN_HOME
+echo $MAVEN_HOME
+echo $JAVA_HOME
+which java
+which mvn
+java -version
+mvn -version
+echo $$
+echo $MAVEN_HOME
+export MAVEN_HOME
+export MAVEN_HOME=/usr/share/maven3
+echo $MAVEN_HOME
+
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre

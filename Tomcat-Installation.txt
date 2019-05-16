@@ -1,0 +1,72 @@
+Install and configuration steps of apache tomcat in unix:
+
+-install java 1.8* then install zip  from tomcat server and follow the below steps:
+ 
+To install java 
+https://www.java.com/en/download/win10.jsp
+
+To install the JDK software, do the following:
+a.	Go to http://java.sun.com/javase/downloads/index.jsp.
+b.	Select the appropriate JDK version and click Download.
+The JDK software is installed on your computer in the default location; for example, at /usr/jdk/jdk1.6.0_02. You can change this location.
+2.	To set JAVA_HOME, do one of the following:
+o	For Korn and bash shells, run the following commands:
+export JAVA_HOME=jdk-install-dir
+export PATH=$JAVA_HOME/bin:$PATH
+o	For the bourne shell, run the following commands:
+JAVA_HOME=jdk-install-dir
+export JAVA_HOME
+PATH=$JAVA_HOME/bin:$PATH
+export PATH
+o	For the C shell, run the following commands:
+setenv JAVA_HOME jdk-install-dir
+setenv PATH $JAVA_HOME/bin:$PATH
+export PATH=$JAVA_HOME/bin:$PATH
+3.	Change the permissions to enable you to run the GlassFish ESB Installer by running the following command:
+chmod 755 JavaCAPS.bin
+
+
+Download, install and configure Tomcat 7
+We are going to download and install Tomcat 7 in the /usr/share directory by running the following two commands:
+wget http://ftp.cixug.es/apache/tomcat/tomcat-7/v7.0.42/bin/apache-tomcat-7.0.42.tar.gz
+tar zxpvf apache-tomcat-7.0.42.tar.gz
+
+To configure Tomcat to launch automatically create a file called tomcat in the directory /etc/rc.d/init.d/ with the following contents:
+!/bin/sh
+# Tomcat init script for Linux.
+#
+# chkconfig: 2345 96 14
+# description: The Apache Tomcat servlet/JSP container.
+JAVA_HOME=/usr/java/jdk1.7.0_40/
+CATALINA_HOME=/usr/share/apache-tomcat-7.0.42
+export JAVA_HOME CATALINA_HOME
+exec $CATALINA_HOME/bin/catalina.sh $*
+
+chmod 755 /etc/rc.d/init.d/tomcat
+chkconfig --level 2345 tomcat on
+
+
+Now we need to set up the Tomcat users. This will allow access to the Manger Console in the Tomcat interface. The users are configured in a file called tomcat-users.xml which is stored in the apache-tomcat-7.0.42/config directory. Open this file using nano and edit the user permissions as below, changing the password as appropriate:
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<role rolename="manager-jmx"/>
+<role rolename="manager-status"/>
+<role rolename="admin-gui"/>
+<user username="tomcat" password="**********" 
+  roles="manager-gui,manager-status,admin-gui"/>
+<user username="tomcattools" password="**********"/>
+
+
+https://readlearncode.com/cloud/amazon-free-usage-tier-installing-tomcat-7-on-an-ec2-linux-instance/
+
+Another way
+The following displays:
+ 
+Figure 1: OpenL Tablets package is added
+6.	If some sh files are not executable, enter the following command:
+chmod +x ./*.sh
+7.	Run the sturtup.sh file:
+sh ./startup.sh
+8.	In the browser, enter the following URL: http://localhost:8080
+If the installation completed successfully, the Apache Tomcat welcome screen appears. The next thing to be done is to configure JVM options for Tomcat.
+

@@ -2,7 +2,7 @@
 git clone https://github.com/maheshkharwadkar/starter-web.git
 1.  git status
 
-2.  git checkout -b myfeature
+2.  git checkout -b myfeature   ---checkouti used to change braches 
 
    Changes to humans.txt
 
