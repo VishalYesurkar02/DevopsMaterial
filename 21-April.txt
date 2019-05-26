@@ -1,0 +1,615 @@
+ git init
+  516  git init e2eproject/
+  517  git add e2eproject/
+  518  git commit -m "ec2 project"
+  519  git remote add origin https://github.com/VishalYesurkar02/ss.git
+  520  git push -u origin master
+ 
+ 
+-------------------Ansible aws----------------------------
+- name: Create a new Demo EC2 instance
+  hosts: localhost
+  gather_facts: False
+
+  vars:
+      region: us-east-1
+      instance_type: t2.micro
+      ami: ami-26ebbc5c  # Redhat
+      keypair: pk-key # pem file name
+
+  tasks:
+
+    - name: Create an ec2 instance
+      ec2:
+         key_name: "{{ keypair }}"
+         #aws_access_key: "AKIAJKCHVVFVMFG7KMNA"
+         #aws_secret_key: "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"
+         group: Kubectl  # security group name
+         instance_type: "{{ instance_type}}"
+         image: "{{ ami }}"
+         wait: true
+         region: "{{ region }}"
+         count: 1  # default
+         count_tag:
+            Name: "Demo"
+         instance_tags:
+            Name: "Demo"
+         vpc_subnet_id: "subnet-8f3a52f5"
+         assign_public_ip: yes
+      register: ec2
+    
+    - debug:
+        msg: "{{ item['private_ip'] }}"
+      with_items: "{{ ec2.instances }}"
+
+    - set_fact: ip_list= "[]"
+   
+    - name: Construct IP list
+      set_fact: ip_list= "{{ ip_list }} + ['{{ item.private_ip }}']"
+      with_items: "{{ ec2.instances }}"
+ 
+    - debug:
+        msg: "{{ ip_list }}"
+
+   
+    - name: Add all web instance IPs to host group
+      add_host: hostname={{ item.public_ip }} groupname=webservers
+      with_items: '{{ ec2.instances }}'
+
+    - name: Wait for SSH to come up
+      wait_for: host={{ item.public_dns_name }} port=22 delay=60 timeout=320 state=started
+      with_items: '{{ ec2.instances }}'
+       
+
+
+-----------
+
+pip install --upgrade pip
+
+pip install boto boto3
+
+-----------------
+
+sudo yum install wget
+wget https://bootstrap.pypa.io/get-pip.py
+sudo yum install gcc libffi-devel python-devel openssl-devel
+sudo python get-pip.py
+
+
+
+https://github.com/maheshkharwadkar/devops/blob/master/ansible/firstplaybook/roles/tomcat/tasks/install_packages.yml
+
+git clone https://github.com/maheshkharwadkar/devops.git
+
+cd roles/tomcat_aws/
+vi defaults/main.yml
+vi tasks/aws-ec2.yml
+ansible-playbook deploy.yml
+
+
+
+vi /etc/systemd/system/tomcat.service
+/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.211-2.6.17.1.el7_6.x86_64/jre
+
+
+ systemctl daemon-reload
+ systemctl start tomcat
+ systemctl status tomcat
+
+
+https://github.com/nvn17git/nvnshoppingcart
+
+---------------Maven Installation--------------------
+java -version
+mvn -v
+apt install maven
+mvn -v
+which maven
+which mvn
+mvn -v
+sudo apt-get remove maven3
+sudo apt-get remove maven
+sudo add-apt-repository "deb http://ppa.launchpad.net/natecarlson/maven3/ubuntu precise main"
+sudo apt-get update
+sudo apt-get install maven3
+sudo ln -s /usr/share/maven3/bin/mvn /usr/bin/mvn
+which 
+echo MAVEN_HOME
+echo $MAVEN_HOME
+echo $JAVA_HOME
+which java
+which mvn
+java -version
+mvn -version
+echo $$
+echo $MAVEN_HOME
+export MAVEN_HOME
+export MAVEN_HOME=/usr/share/maven3
+echo $MAVEN_HOME
+
+
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+
+-----------------Boto3 Install- --------------------
+sudo apt-get install wget
+wget https://bootstrap.pypa.io/get-pip.py
+sudo apt-get install gcc libffi-devel python-devel openssl-devel
+sudo python get-pip.py
+sudo pip install boto
+
+
+
+
+
+- name: print IP address of the machine
+  debug: var=ansible_all_ipv4_addresses
+  debug: var=ansible_default_ipv4.address
+  
+  
+ ------------main.yml
+ 
+ # tasks file for customrole
+- name: print ip address of the machine
+  debug: var=ansible_all_ipv4_addresses
+
+
+---------------site.yml
+
+---
+- name: Create a new Demo EC2 instance
+  hosts: localhost
+  gather_facts: true
+  connection: local
+  roles:
+    - customrole
+    
+    
+
+  site.yml***
+  ---
+- name: Create a new EC2 instance
+  hosts: localhost
+  roles:
+      - customrole
+
+
+
+hts://github.com/VishalYesurkar02/ss
+--------------------Ansible+Jenkins e2e project------------------
+tp
+chown jenkins:jenkins server1.pem
+chown jenkins:jenkins ansible.cfg #step to remove tty error
+vi /etc/sudoers 
+jenkins ALL=(ALL) NOPASSWD: ALL
+
+
+
+vi /etc/systemd/system/tomcat.service
+/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.211-2.6.17.1.el7_6.x86_64/jre
+
+
+scp -r /opt/ansible-demo/devops/ansible root@172.31.24.210:/opt/ansible-demo/
+
+
+
+ansible-playbook /opt/ansible-dev/deploy.yml -vv
+
+
+
+vi ~/.ssh/server1.pem
+
+
+
+
+root@ip-172-31-93-130:/opt/ansible-dev/roles/tomcat/templates# cat tomcat.service.j2
+
+For our machine ----- Check the below patch
+
+/opt/ansible-demo/devops/ansible/ansible/e2eproject/roles/tomcat/templates
+
+Do a vi tomcat.service.j2
+
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=syslog.target network.target
+
+[Service]
+Type=forking
+Environment=JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.211-2.6.17.1.el7_6.x86_64/jre
+Environment=CATALINA_PID=/usr/local/apache-tomcat-8.0.23/bin/temp/tomcat.pid
+Environment=CATALINA_HOME=/usr/local/apache-tomcat-8.0.23
+Environment=CATALINA_BASE=/usr/local/apache-tomcat-8.0.23
+Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
+Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+
+ExecStart=/usr/local/apache-tomcat-8.0.23/bin/startup.sh
+ExecStop=/bin/kill -15 $MAINPID
+
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
+root@ip-172-31-93-130:/opt/ansible-dev/roles/tomcat/templates#
+
+
+----------------------------------------
+
+Do the changes below in deploy.yml 
+
+root@ip-172-31-24-210:/opt/ansible-demo/devops/ansible/ansible/e2eproject# vi deploy.yml
+
+Uncomment all below and change the path
+
+
+
+
+src: /var/lib/jenkins/workspace/e2eproject/target/nvnshoppingcart.war
+
+--------------------------- - copy:
+      src: /var/lib/jenkins/workspace/e2eproject/target/nvnshoppingcart.war
+      dest: /usr/local/apache-tomcat-8.0.23/webapps/
+      mode: 0777
+      owner: root
+      group: root
+-----------------
+http://35.175.214.114:8080/env-vars.html/
+
+===21 April===
+ 1  cd /var/lib/jenkins/workspace/demo
+    2  ls
+    3  cd ..
+    4  ls
+    5  cd /etc/yum.repos.d
+    6  vi /etc/yum.repos.d/vi ansible.repo
+    7  cd /etc/yum.repos.d
+    8  cd /etc/
+    9  ls
+   10  mkdir yum.repos.d
+   11  cd yum.repos.d/
+   12  vi ansible.repo
+   13  ls
+   14  cd /opt/
+   15  ls
+   16  cd yum.repos.d/
+   17  cd /etc/yum.repos.d
+   18  ls
+   19  yum update
+   20  apt install yum
+   21  sudo apt update -y
+   22  apt list --upgradable
+   23  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   24  apt install rpm
+   25  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   26  ls
+   27  sudo apt install ansible
+   28  ls
+   29  ansible --version
+   30  cd /etc/
+   31  vi ansible/hosts
+   32  cd /opt/
+   33  ls
+   34  vi ~.ssh/server1.pem
+   35  cd ~/.ssh
+   36  ls
+   37  vi server1.pem
+   38  ls
+   39  vi /etc/ansible/hosts
+   40  ansible servers -m raw"uptime"
+   41  chmod 600 ~/.ssh/server1.pem
+   42  ansible servers -m raw"uptime"
+   43  ansible servers -m raw -a "uptime"
+   44  ansible servers -m raw -a "yum update -y"
+   45  ansible servers --sudo  -m raw -a "yum update -y"
+   46  mkdir -p /opt/ansibel-demo && cd /opt/ansibel-demo
+   47  vi install-http.yaml
+   48  ansible-playbook install-http.yaml
+   49  vi install-http.yaml
+   50  cat /var/lib/jenkins/secrets/initialAdminPassword
+   51  cd /opt/ansibel-demo/
+   52  ls
+   53  ansible-playbook install-http.yaml
+   54  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpmrpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   55  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   56  ls
+   57  cd ~/.ssh
+   58  ls
+   59  ssh-keygen
+   60  ls
+   61  cat ~/.ssh/id_rsa.pub
+   62  chmod 700 ~/.ssh
+   63  ansible -m ping all
+   64  ansible -m shell -a 'free -m' all
+   65  ansible-playbook install-http.yaml
+   66  cd /opt/ansibel-demo/
+   67  ansible-playbook install-http.yaml
+   68  cat install-http.retry
+   69  vi repro.yaml
+   70  ansible-playbook repro.yaml
+   71  apt rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   72  apt -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   73  rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+   74  cd /etc/ansible/
+   75  ls
+   76  cd /opt
+   77  sudo apt update -y
+   78  sudo apt-get update -y
+   79  sudo apt-get install openjdk-8-jdk
+   80  wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -
+   81  echo "deb http://pkg.jenkins-ci.org/debian binary/" | sudo tee -a /etc/apt/sources.list.d/jenkins.list
+   82  sudo apt-get update
+   83  sudo apt-get install jenkins
+   84  service jenkins status
+   85  service jenkins start
+   86  service jenkins status
+   87  jenkins --version
+   88  ls
+   89  cd /etc/ansible/
+   90  ls
+   91  cat ansible.cfg
+   92  apt-get install openjdk-8-jdk
+   93  systemctl start jenkins
+   94  systemctl status jenkins
+   95  systemctl restart jenkins
+   96  systemctl status jenkins
+   97  sudo apt-add-repository ppa:ansible/ansible
+   98  sudo apt-get update
+   99  netstat -tulpn
+  100  curl http://localhost:8080
+  101  sudo apt-get install git
+  102  git --version
+  103  ssh-keygen -t rsa -C "yesurkarvishal@gmail.com"
+  104  cat ~/.ssh/id_rsa.pub
+  105  java -version
+  106  mvn -v
+  107  apt install maven
+  108  mvn -v
+  109  which maven
+  110  which mvn
+  111  mvn -v
+  112  sudo apt-get remove maven3
+  113  sudo apt-get remove maven
+  114  sudo add-apt-repository "deb http://ppa.launchpad.net/natecarlson/maven3/ubuntu precise main"
+  115  sudo apt-get update
+  116  sudo apt-get install maven3
+  117  which mvn
+  118  sudo ln -s /usr/share/maven3/bin/mvn /usr/bin/mvn
+  119  mvn -v
+  120  sudo apt-get remove maven
+  121  sudo apt-get install maven
+  122  mvn -v
+  123  export MAVEN_HOME=/usr/share/maven
+  124  echo $MAVEN_HOME
+  125  which java
+  126  ls -ltr
+  127  ls -ltr /usr/lib/jvm/
+  128  ls -ltr /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/
+  129  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+  130  cd /opt/
+  131  git clone https://github.com/nvn17git/nvnshoppingcart
+  132  mvn clean install
+  133  cd nvnshoppingcart/
+  134  mvn clean install
+  135  ls -lrt
+  136  cd target/
+  137  ls
+  138  apt-get install ansible
+  139  ansible --version
+  140  jenkins --version
+  141  jenkins -version
+  142  which jenkins
+  143  sudo apt-get install wget
+  144  wget https://bootstrap.pypa.io/get-pip.py
+  145  sudo apt-get install gcc libffi-devel python-devel openssl-devel
+  146  sudo python get-pip.py
+  147  sudo pip install boto
+  148  echo $JAVA_HOME
+  149  sudo pip install boto3
+  150  cd /opt/
+  151  l s-lrt
+  152  ls-lrt
+  153  mkdir ansible-dev/
+  154  cd ansible-dev/
+  155  mkdir roles
+  156  cd roles/
+  157  ansible-galaxy init custrole
+  158  cd custrole/
+  159  tree
+  160  apt-get install tree
+  161  tree
+  162  cd ../..
+  163  vi site.yaml
+  164  vi roles/custrole/tasks/main.yml
+  165  vi site.yaml
+  166  ansible-playbook site.yaml
+  167  vi site.yaml
+  168  ansible-playbook site.yaml
+  169  vi roles/custrole/tasks/main.yml
+  170  ansible-playbook site.yaml
+  171  vi site.yaml
+  172  ansible-playbook site.yaml
+  173  vi site.yaml
+  174  vi roles/custrole/tasks/main.yml
+  175  ansible-playbook site.yaml
+  176  vi site.yaml
+  177  ansible-playbook site.yaml
+  178  vi roles/custrole/tasks/main.yml
+  179  cd ..
+  180  mkdir test
+  181  cd test/
+  182  git clone
+  183  git clone https://github.com/VishalYesurkar02/ss
+  184  cd ..
+  185  ls
+  186  cd test/
+  187  ls
+  188  cd ss
+  189  ls
+  190  cd e2eproject/
+  191  ls
+  192  cp -ir roles ../../../ansible-dev/
+  193  cp -ir deploy.yml ../../../ansible-dev/
+  194  ls
+  195  ansible-playbook deploy.yml
+  196  cat deploy.yml
+  197  cd /opt/ansible-dev/
+  198  ls
+  199  cd ..
+  200  ls
+  201  cd ansible-dev/roles/tomcat_aws/
+  202  ls
+  203  cd tasks/
+  204  ls
+  205  less aws-ec2.yml
+  206  history
+  207  cd /opt/
+  208  ls
+  209  cd test
+  210  ls
+  211  cd ss
+  212  ls
+  213  cd e2eproject/roles/
+  214  ls
+  215  cd tomcat_aws/
+  216  ls
+  217  cd tasks/
+  218  ls
+  219  cat main.yml
+  220  anible-playbook main.yml
+  221  ansible-playbook main.yml
+  222  cat aws-ec2.yml
+  223  vi aws-ec2.yml
+  224  ansible-playbook main.yml
+  225  vi aws-ec2.yml
+  226  ansible-playbook main.yml
+  227  vi aws-ec2.yml
+  228  ansible-playbook main.yml
+  229  vi aws-ec2.yml
+  230  ansible-playbook main.yml
+  231  vi aws-ec2.yml
+  232  ansible-playbook main.yml
+  233  cd /opt
+  234  ls
+  235  cd ansible-dev/
+  236  ls
+  237  ansible-playbook site.yaml
+  238  cat deploy.yml
+  239  cd ..
+  240  ls
+  241  cd nvnshoppingcart/
+  242  ls
+  243  cd ..
+  244  cd ansible-demo
+  245  cd ansibel-demo/
+  246  ls
+  247  ansible-playbook install-http.yaml
+  248  cd /opt/
+  249  ls
+  250  cd ansibel-demo/
+  251  ls
+  252  cd ..
+  253  cd ansible-dev/
+  254  ls
+  255  cat deploy.yml
+  256  ld
+  257  ls
+  258  cd roles/
+  259  ls
+  260  cd tomcat_aws/
+  261  ls
+  262  cd tasks/
+  263  ls
+  264  vi aws-ec2.yml
+  265  ansible-playbook aws-ec2.yml
+  266  vi aws-ec2.yml
+  267  ansible-playbook aws-ec2.yml
+  268  cd  /opt/
+  269  ls
+  270  cd ansibel-demo/
+  271  ls
+  272  cd ..
+  273  cd ansible-dev/
+  274  ls
+  275  cd ..
+  276  cd test/
+  277  ls
+  278  cd ss
+  279  ls
+  280  cd /opt/
+  281  ll
+  282  git clone https://github.com/maheshkharwadkar/devops.git
+  283  ll
+  284  cd devops/
+  285  ll
+  286  tree
+  287  ll
+  288  cd ansible/e2eproject/
+  289  ll
+  290  cd roles/tomcat_aws/tasks/
+  291  ll
+  292  vi aws-ec2.yml
+  293  ansible-playbook aws-ec2.yml
+  294  vi aws-ec2.yml
+  295  ansible-playbook aws-ec2.yml
+  296  ls
+  297  ls /var/lib/jenkins/workspace/e2eproject/target/nvnshoppingcart.war
+  298  ls -iart /var/lib/jenkins/workspace/e2eproject/target/nvnshoppingcart.war
+  299  ls -lart /var/lib/jenkins/workspace/e2eproject/target/nvnshoppingcart.war
+  300  date
+  301  service jenkins restart
+  302  vi /etc/ansible/hosts
+  303  vi /opt/devops/ansible/e2eproject/roles/tomcat_aws/tasks/aws-ec2.yml
+  304  ll
+  305  ls ~/aws
+  306  ls ~/.aws
+  307  cd /var/lib/jenkins/
+  308  mkdir .aws
+  309  cd .aws
+  310  vi credentials
+  311  vi /opt/devops/ansible/e2eproject/roles/tomcat_aws/tasks/aws-ec2.yml
+  312  cd /opt/devops/ansible/e2eproject/roles/tomcat_aws/tasks
+  313  ls
+  314  vi main.yml
+  315  cd ..
+  316  ls
+  317  cd defaults/
+  318  ls
+  319  vi main.yml
+  320  cd ../..
+  321  ls
+  322  cd ..
+  323  ls
+  324  vi deploy.yml
+  325  cd /var/lib/jenkins/.ssh/
+  326  ls -lrt
+  327  pwd
+  328  service jenkins restart
+  329  cd /var/lib/jenkins/workspace/e2eproject/
+  330  ll
+  331  vi ansible.cfg
+  332  ls
+  333  cd /opt/devops/ansible/
+  334  ls
+  335  cd e2eproject/
+  336  ls
+  337  cat deploy.yml
+  338  ls
+  339  cd roles/
+  340  ls
+  341  cd tomcat
+  342  ls
+  343  cd defaults/
+  344  ls
+  345  cat main.yml
+  346  cd ../tasks/
+  347  ls
+  348  cd ..
+  349  cd ../tomcat_aws
+  350  ls
+  351  cd defaults/
+  352  ls
+  353  cat main.yml
+  354  ssh 172.31.22.62
+  355  exit
+  356   
+  357  history

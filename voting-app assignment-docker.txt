@@ -1,0 +1,187 @@
+--------------Docker Networking--------------------------------
+docker run -d --name test1 busybox sh -c "while true;do sleep 3600;done"
+
+
+
+ip netns exec test1 ip addr add 192.168.1.2/24 dev veth-1
+ip netns exec test1 ip link set dev veth-1 up
+ip netns exec test1 ip link
+ip netns exec test1 ping 192.168.1.1
+ip netns exec test1 ip a
+
+docker swarm init --advertise-addr 172.31.18.123   ----master node swarm manger
+docker swarm join --token SWMTKN-1-29xy994dwucde8tkgdqftkti8uworlgvy08m74t7i91dpp5sob-7lv7o8iacw65ind2zkyqri674 172.31.16.190:2377   ---worker
+
+docker node ls
+
+docker service create --name web -p 80:80/tcp nginx
+
+docker service ls
+docker service ps web
+docker service inspect web
+docker service ps
+curl localhost:80
+docker service rm web   
+
+
+ docker service create \
+  --name=viz \
+  --publish=8080:8080/tcp \
+  --constraint=node.role==manager \
+--mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+  dockersamples/visualizer 
+
+
+docker service create --name=viz --publish=8080:8080/tcp --constraint=node.role==manager --mount=type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock dockersamples/visualizer
+docker service create --replicas 1 --name helloworld --publish 80:8000 jwilder/whoami ---creating nodes replica
+
+docker service create --replicas 1 --name helloworld --publish 80:8000 jwilder/whoami
+
+-----------------------Docker Stack----------------------------------
+vi docker-compose.yml
+
+version: "3"
+services:
+  web:
+    # replace username/repo:tag with your name and image details
+    image: jwilder/whoami
+    deploy:
+      replicas: 5
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+    ports:
+      - "80:8000"
+    networks:
+      - webnet
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
+networks:
+  webnet:
+  
+  docker stack deploy -c docker-compose.yml getstartedl
+docker stack ps getstartedl
+
+********************************
+Assignment: 
+1. Run voting app using docker stack
+
+root@ip-172-31-16-166:/opt/example-voting-app# cat docker-stack.yml
+version: "3"
+services:
+
+  redis:
+    image: redis:alpine
+    networks:
+      - frontend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  db:
+    image: postgres:9.4
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+  vote:
+    image: dockersamples/examplevotingapp_vote:after
+    ports:
+      - 5000:80
+    networks:
+      - frontend
+    depends_on:
+      - redis
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 2
+      restart_policy:
+        condition: on-failure
+  result:
+    image: dockersamples/examplevotingapp_result:after
+    ports:
+      - 5001:80
+    networks:
+      - backend
+    depends_on:
+      - db
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  worker:
+    image: dockersamples/examplevotingapp_worker
+    networks:
+      - frontend
+      - backend
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels: [APP=VOTING]
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints: [node.role == manager]
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8080:8080"
+    stop_grace_period: 1m30s
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  db-data:
+  
+ ### https://github.com/docker/labs/blob/master/beginner/chapters/votingapp.md
+  
+***************************************************************
+
+2. Create master and slave of jenkins using docker
+3. Create jenkins containers
+
+
+
+
+
+
+
+
+
+
+
+

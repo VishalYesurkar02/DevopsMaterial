@@ -1,0 +1,54 @@
+    1  pwd
+    2  mkdir -p /opt/DevopsMaterial && cd /opt/DevopsMaterial
+    3  git init
+    4  yum install git -i
+    5  yum install git -y
+    6  git init
+    7  history
+    8  vi linuxcommand.txt
+    9  ls
+   10  cat linuxcommand.txt
+   11  git stautus
+   12  git status
+   13  git add linuxcommand.txt
+   14  git status
+   15  git commit -m"my first commit"
+   16  git status
+   17  git remote add origin https://github.com/VishalYesurkar02/DevopsMaterial.                                                                                        git
+   18  git push -u origin master
+   19  history
+   20  cat linuxcommand.txt
+   21  vi linuxcommand.txt
+   22  cd /root/.ssh
+   23  ls -lrt
+   24  vi
+   25  vi authorized_keys
+   26  cat authorized_keys
+   27  cd \opt
+   28  cd /opt
+   29  vi aa
+   30  cat aa
+   31  vi aa
+   32  cat aa
+   33  ls -ltr
+   34  cd /root/.ssh
+   35  ll
+   36  vi authorized_keys
+   37  cat authorized_keys
+   38  vi authorized_keys
+   39  history
+   40  pwd
+   41  cd /opt
+   42  cat linux1.txt
+   43  history
+   44  pwd
+   45  ls -ltr
+   46  yum install git
+   47  mkdir -p /opt/DevopsMaterial && cd /opt/DevopsMaterial
+   48  ls
+   49  cat linuxcommand.txt
+   50  vi linux1.txt
+   51  sudo su -
+   52  ls -ltr
+   53  history
+

@@ -1,0 +1,174 @@
+https://github.com/maheshkharwadkar/jenkins_pipeline_hello.git
+
+https://github.com/maheshkharwadkar/jenkins_pipeline_shell_scripts
+
+/usr/lib/jvm/java-8-openjdk-amd64/jre
+
+https://github.com/maheshkharwadkar/jenkins_pipeline_java_maven.git
+
+------------Connect.php------------------
+<?php
+class RemoteConnect
+{
+  public function connectToServer($serverName=null)
+  {
+    if($serverName==null){
+      throw new Exception("No server name provided!");
+    }
+    $fp = fsockopen($serverName,80);
+    return ($fp) ? true : false;
+  }
+  public function returnSampleObject()
+  {
+    return $this;
+  }
+}
+?>
+
+
+-------------------ConnectTest.php-------------------------
+<?php
+require_once('Connect.php');
+class RemoteConnectTest extends PHPUnit_Framework_TestCase
+{
+  public function setUp(){ }
+  public function tearDown(){ }
+  public function testConnectionIsValid()
+  {
+    // test to ensure that the object from an fsockopen is valid
+    $connObj = new RemoteConnect();
+    $serverName = 'www.google.com';
+    $this->assertTrue($connObj->connectToServer($serverName) !== false);
+  }
+}
+?>
+
+-------------------- Jenkinsfile ------------------
+pipeline {
+
+  agent {
+    node {
+      label 'master'
+    }
+  }
+
+  options {
+    timestamps()
+  }
+
+  stages {
+    stage('PHPUnit Test') {
+      steps {
+        echo 'Running PHPUnit...'
+        sh '/bin/phpunit ${WORKSPACE}/src'
+      }
+    }
+  
+  }
+}
+
+
+https://gist.github.com/alexpchin/dc91e723d4db5018fef8
+
+
+
+  698  systemctl start docker
+  699  sudo apt-get update
+  700  sudo apt-get install     apt-transport-https     ca-certificates     curl     gnupg-agent     software-properties-common
+  701  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  702  sudo apt-key fingerprint 0EBFCD88
+  703  sudo apt-get install docker-ce docker-ce-cli containerd.io
+  704  sudo add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+  705     $(lsb_release -cs) \
+  706     stable"
+  707  sudo apt-get update
+  708  sudo apt-get install docker-ce docker-ce-cli containerd.io
+  709  sudo docker run hello-world
+  710  apt-cache madison docker-ce
+  711  sudo docker run hello-world
+  712  systemctl start docker
+  713  systemctl status docker
+  714  jenkins --version
+  715  cd /opt/
+  716  ll
+  717  cd devops/
+  718  ll
+  719  cd ansible/
+  720  ll
+  721  cd e2eproject/
+  722  ll
+  723  cat deploy.yml
+  724  cd roles/
+  725  ll
+  726  cd tomcat_aws/
+  727  ll
+  728  cd tasks/
+  729  ll
+  730  cat aws-ec2.yml
+  731  g
+  732  cd /
+  733  java --version
+  734  java -version
+  735  which java
+  736  cd usr/bin/java
+  737  cd /usr/lib/jvm/
+  738  ll
+  739  which maven
+  740  cd /usr/share/maven
+  741  pwd
+  742  mvn -v
+  743  cd /opt/
+  744  cd devops/
+  745  mkdir batch2
+  746  cd batch2/
+  747  mkdir Jinkins
+  748  cd Jinkins/
+  749  mkdir sample_php_project
+  750  cd sample_php_project/
+  751  cd /
+  752  cd /opt/
+  753  mkdir sample_php_project
+  754  cd sample_php_project/
+  755  mkdir src
+  756  cd src/
+  757  vi connect.php
+  758  vi ConnectTest.php
+  759  vi Jenkinsfile
+  760  ll
+  761  cd ..
+  762  cd src/
+  763  rm Jenkinsfile
+  764  cd ..
+  765  vi Jenkinsfile
+  766  tree
+  767  cd /
+  768  cd opt/
+  769  l
+  770  cd sample_php_project/
+  771  tree
+  772  git init
+  773  ll
+  774  git commit -m "first commit"
+  775  git remote add origin https://github.com/VishalYesurkar02/Sample_Php_Project.git
+  776  git push -u origin master
+  777  git add Jenkinsfile src/
+  778  git status
+  779  git push -u origin master
+  780  git remote add origin https://github.com/VishalYesurkar02/Sample_Php_Project.git
+  781  git push -u origin master
+  782  git commit -m"upload to master branch"
+  783  git push -u origin master
+  784  git checkout Dev
+  785  git checkout -b Dev
+  786  ls
+  787  git checkout master
+  788  git branch Prod
+  789  git push -u origin Prod
+  790  git push -u origin Dev
+  791  cd /var/lib/jenkins/workspace/MultiBranch_Pipeline_Dev@tmp/durable-a4d2f35e
+  792  git checkout Dev
+  793*
+  794  ls
+  795  git push -u origin master
+  796  git push -u origin features1
+  797  history

@@ -1,0 +1,165 @@
+ 1  pwd
+    2  ls -lrt
+    3  .ssh
+    4  who i am
+    5  sudo su -
+    6  pwd
+    7  su su -
+    8  pwd
+    9  sudo su -
+   10  pwd
+   11  sudo su -
+   12  which bash
+   13  sudo su -
+   14  ls
+   15  vi bash
+   16  ls
+   17  bash bash
+   18  bash bash vish
+   19  vi functiondemo.sh
+   20  sh functiondemo.sh
+   21  vi argumentpassing.sh
+   22  bash argumentpassing.sh
+   23  vi argumentpassing.sh
+   24  bash argumentpassing.sh
+   25  git remote add origin https://github.com/VishalYesurkar02/demo.git
+   26  git status
+   27  git push -u origin master
+   28  git init
+   29  ls
+   30  git add argumentpassing.sh
+   31  git status
+   32  git commit argumentpassing.sh
+   33  git status
+   34  git init
+   35  exit
+   36  pwd
+   37  ls
+   38  git init
+   39  git add argumentpassing.sh
+   40  git commit argumentpassing.sh
+   41  git push -u origin master
+   42  git status
+   43  git init
+   44  pwd
+   45  yum install git
+   46  yum install git -y
+   47  git init
+   48  git add argumentpassing.sh
+   49  git status
+   50  git commit -m"demo"
+   51  ls
+   52  yum install git -y
+   53  git init
+   54  ls -ltr
+   55  git add bash
+   56  git status
+   57  git commit -m"demo"
+   58  git status
+   59  ls
+   60  git remote add origin https://github.com/VishalYesurkar02/DevopsMaterial
+   61  git push -u origin master
+   62  pwd
+   63  #!/bin/bash
+   64  filename=homedirbackup_$(date +%Y%m%d).tar.gz
+   65  tar -czf $filename /$HOME
+   66  vi functiondemo.sh
+   67  bash functiondemo.sh
+   68  vi argumentpassing.sh
+   69  bash argumentpassing.sh
+   70  ls
+   71  git status
+   72  git add function.ssh
+   73  git add functiondemo.ssh
+   74  git add functiondemo.sh
+   75  git status
+   76  git commit functiondemo.sh
+   77  git remote add origin https://github.com/VishalYesurkar02/DevopsMaterial
+   78  git push -u origin master
+   79  git push --help
+   80  git remote add origin https://github.com/VishalYesurkar02/DevopsMaterial.git
+   81  git push origin DevopsMaterial
+   82  git push origin Master
+   83  ls -lrt
+   84  git status
+   85  git commit -m"function demo"
+   86  git status
+   87  git push -u origin master
+   88  git remote add origin https://github.com/VishalYesurkar02/DevopsMaterial.git
+   89  git status
+   90  ls -ltr
+   91  git add argumentpassing.sh
+   92  git commit -m"argument passing"
+   93  git status
+   94  cat argumentpassing.sh
+   95  bash argumentpassing.sh
+   96  git push -u origin master
+   97  git remote add origin https://github.com/VishalYesurkar02/DevopsMaterial
+   98  git push -u origin master
+   99  git clone --man
+  100  git clone -s
+  101  git clone https://github.com/VishalYesurkar02/demo.git
+  102  sh operator.sh 54
+  103  vi bash-case.sh
+  104  sh bash-case.sh 8
+  105  0
+  106  sh bash-case.sh
+  107  vi bash-case.sh
+  108  vi bash-for-loop.sh
+  109  sh bash-for-loop.sh
+  110  ls
+  111  vi bash-for-loop.sh
+  112  sh bash-for-loop.sh
+  113  vi c-style-loop.sh
+  114  sh c-style-loop.sh
+  115  vi bash-whileloop.sh
+  116  sh bash-whileloop.sh
+  117  vi complex.sh
+  118  sh complex.sh
+  119  4
+  120  sh complex.sh
+  121  2
+  122  sh complex.sh
+  123  2
+  124  sh complex.sh
+  125  sh complex.sh 4
+  126  sh complex.sh 2
+  127  vi complex.sh
+  128  sh complex.sh
+  129  ls
+  130  pwd
+  131  git init
+  132  git status
+  133  git add .
+  134  git status
+  135  git commit
+  136  git commit -m"myfiles"
+  137  git status
+  138  git remote add https://github.com/VishalYesurkar02/demo.git
+  139  git remote add origin https://github.com/VishalYesurkar02/demo.git
+  140  git push -u origin master
+  141  ls
+  142  ls -al
+  143  cd /.git
+  144  cd .git
+  145  ls -l
+  146  cat config
+  147  cd ..
+  148  git remote -v
+  149  git remote rm https://github.com/VishalYesurkar02/DevopsMaterial.git
+  150  git remote rm origin
+  151  git remote -v
+  152  git remote add origin https://github.com/VishalYesurkar02/demo.git
+  153  git push -u origin master
+  154  git fetch --all
+  155  git push -u origin master
+  156  git pull
+  157  git pull https://github.com/VishalYesurkar02/demo.git
+  158  ls -l
+  159  cp -ir * /tmp/
+  160  git pull https://github.com/VishalYesurkar02/demo.git
+  161  git push -u origin master
+  162  vi unirank.csv
+  163  history
+  164  history > gitfiles.txt
+/bin:/usr/bin:/sbin:/usr/sbin:/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin

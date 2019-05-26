@@ -1,0 +1,15 @@
+ 1  useradd user1
+    2  cd /tmp
+    3  ls
+    4  cd ..
+    5  cd /tmp
+    6  ls
+    7  scp -i shellscript.txt ec2-user@ec2-52-15-159-246.us-east-2.compute.amazonaws.com:/tmp
+    8  scp shellscript.txt ec2-user@ec2-52-15-159-246.us-east-2.compute.amazonaws.com:/tmp
+    9  scp shellscript.txt ec2-52-15-159-246.us-east-2.compute.amazonaws.com:/tmp
+   10  scp shellscript.txt ec2-52-15-159-246.us-east-2.compute.amazonaws.com:/tmp
+   11  history
+ scp outfile.txt root@ec2-18-224-229-155.us-east-2.compute.amazonaws.com:/tmp
+  60  scp -i /c/Users/Vishal/Downloads/awsdemo.pem shellscript.txt ubuntu@ec2-18-224-229-155.us-east-2.compute.amazonaws.com:/tmp
+   61  scp -i /c/Users/Vishal/Downloads/awsdemo.pem shellscript.txt ubuntu@ec2-18-224-229-155.us-east-2.compute.amazonaws.com:/tmp
+   62  history

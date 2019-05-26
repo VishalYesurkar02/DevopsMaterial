@@ -1,0 +1,81 @@
+ Volume in drive F is master
+ Volume Serial Number is 4C18-245B
+
+ Directory of F:\Vishal\ethans tech
+
+16/05/2019  11:48 AM    <DIR>          .
+16/05/2019  11:48 AM    <DIR>          ..
+14/05/2019  12:35 PM             4,278 04-May_Piplepine.txt
+20/04/2019  11:46 AM             5,029 20April.txt
+02/05/2019  05:38 PM            15,770 21-April.txt
+23/03/2019  04:44 PM               597 23mar.txt
+24/03/2019  11:13 AM               596 24mar.txt
+15/05/2019  12:45 PM             1,003 27April-GitLocal.txt
+07/05/2019  04:31 PM    <DIR>          Ansible
+13/04/2019  11:32 AM            12,938 ansible-cmd-13april.txt
+14/04/2019  11:38 AM            18,362 ansible-cmd-14april.txt
+20/04/2019  08:18 PM            21,650 ansible-cmd.txt
+06/04/2019  11:55 AM             1,890 Ansible-installation.txt
+13/04/2019  07:13 PM            53,140 Ansible-task-module.PNG
+13/04/2019  06:20 PM           155,117 Ansible-task.PNG
+15/03/2019  11:02 AM           324,561 AWK.pdf
+24/03/2019  11:14 AM           107,375 bash_cheat_sheet.pdf
+16/05/2019  11:47 AM               631 C?lists.txt
+09/03/2019  11:00 AM               814 day-4.txt
+10/03/2019  11:58 AM             3,076 day-5.txt
+17/03/2019  11:51 AM             1,618 day-6-1.txt
+01/04/2019  12:22 PM               307 default_pass.py
+01/04/2019  11:54 AM               176 demo.py
+14/05/2019  12:20 PM                72 demo.txt
+03/03/2019  11:06 AM            13,900 demoshellscript.txt
+16/02/2019  10:19 AM         1,430,635 Devops-intro.pdf
+15/04/2019  12:54 PM    <DIR>          devops-master
+14/04/2019  09:56 AM        37,902,849 devops-master.zip
+30/03/2019  11:27 AM               423 dictionary.py
+16/04/2019  04:44 PM               342 disk-alert.py
+13/05/2019  12:45 PM    <DIR>          Docker
+21/04/2019  08:36 AM             1,437 EC2_with_Ansible.txt
+01/04/2019  12:31 PM               522 functtion_cred.py
+01/05/2019  10:57 PM             4,470 gitfilepushpull.txt
+19/03/2019  03:03 PM           571,189 Hosting a Web App on Amazon Web-practice.docx
+18/03/2019  11:34 AM         6,628,492 Hosting a Web App on Amazon Web.pdf
+01/05/2019  07:12 PM               115 httpd.sh
+01/04/2019  12:39 PM               182 If_else.py
+24/03/2019  10:32 AM               694 install python3 in ubuntu.txt
+20/04/2019  09:46 AM            36,677 install-jrenkins_maven.pdf
+13/04/2019  09:55 AM             1,612 install-nginx.yaml.txt
+04/05/2019  10:55 PM            32,566 Installation of Jenkins + Maven + Java + Nexus.pdf
+15/03/2019  11:04 AM         1,647,265 Introduction to devops.pdf
+16/04/2019  11:19 AM           285,409 Jenkins-Installation.html
+15/05/2019  04:43 PM    <DIR>          Jenkins-Installation_files
+13/05/2019  12:30 PM           780,931 Learning-Git.pdf
+15/03/2019  11:01 AM            39,761 Linux-interview.pdf
+30/03/2019  10:07 AM               252 list.py
+16/05/2019  11:48 AM                 0 list.txt
+30/03/2019  11:01 AM               418 listcom.py
+30/03/2019  10:09 AM               261 looping.py
+30/03/2019  11:31 AM               205 loop_thr_dis.py
+15/05/2019  12:42 PM               659 Maven-Installation.txt
+16/04/2019  04:34 PM               200 mod1.py
+30/03/2019  09:45 AM               207 mul.py
+05/05/2019  01:52 PM    <DIR>          mvnrepo
+13/04/2019  10:01 AM    <DIR>          nginx-demo
+14/05/2019  02:37 PM               160 osdemo.sh
+14/05/2019  02:40 PM    <DIR>          Practise+Script
+17/03/2019  08:30 AM            37,352 Python Djanjo.pdf
+15/03/2019  10:48 PM           532,464 Python learn.pdf
+01/04/2019  11:42 AM            42,449 python-script.pdf
+10/03/2019  12:01 PM             2,360 runeverywhere.sh
+09/03/2019  03:12 PM                12 SERVER_LIST.txt
+15/03/2019  12:01 PM    <DIR>          shellclass
+15/03/2019  11:03 AM         2,077,269 shellclass.zip
+03/03/2019  11:08 AM             6,905 shellscript-1.txt
+02/03/2019  05:02 PM             1,041 shellscript.txt
+11/05/2019  11:09 AM    <DIR>          Snap-mobi
+29/03/2019  10:49 AM            42,239 Staging-Area-Git-Interview-Questions-Edureka-1.png
+30/03/2019  11:21 AM               247 str_char.py
+15/05/2019  12:53 PM             3,094 Tomcat-Installation.txt
+03/03/2019  07:34 PM            13,060 unirank.csv
+27/03/2019  12:53 PM         3,387,309 Whizlabs Online Certification Training Courses for Professionals (AWS, Java, PMP).pdf
+              63 File(s)     56,256,634 bytes
+              11 Dir(s)  19,469,672,448 bytes free

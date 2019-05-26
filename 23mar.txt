@@ -1,0 +1,25 @@
+sudo pip install django==1.11 requests boto3 django-bootstrap3 pillow
+
+s2WRPtpNrp5kV6x
+
+https://github.com/maheshkharwadkar/Django-Application.git
+
+scp -i "key path" source floder ubuntu@ip:/home/ubuntu/s3pythonapp Copy s3pythonapp to /home/ubuntu/s3pythonapp
+
+#!bin/sh
+
+[Unit]
+Description=Sample S3 Django Application
+After=network.target
+
+[Service]
+PIDFILE=/var/run/cric.pid
+ExecStart=/usr/bin/python /home/ubuntu/s3pythonapp/manage.py runserver 0.0.0.0:80
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+
+===================
+
+python manage.py runserver 0.0.0.0:80
