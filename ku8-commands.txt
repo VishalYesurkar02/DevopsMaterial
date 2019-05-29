@@ -1,0 +1,178 @@
+kubeadm join 172.31.20.158:6443 --token pqwwmg.h8iepxhdck3w7z5t \
+    --discovery-token-ca-cert-hash sha256:307658ffc347e8a7c6684d48ecd2662f453b13a885ac59ec1dee5319e16c4bd1
+	
+
+For CPU Issue:
+kubeadm init --ignore-preflight-errors=NumCPU
+
+For Tocken issues:
+kubectl -n kube-system get secret clusterinfo -o yaml | grep token-map | awk '{print $2}' | base64 --decode | sed "s|{||g;s|}||g;s|:|.|g;s/\"//g;" | xargs echo
+
+kubectl -n kube-system get secret -o=name | grep 'admin-user'
+
+------------------------Kubernetes---------------------------------------
+apiVersion: "v1"
+kind: Pod
+metadata:
+  name: redis
+  labels:
+    name: redis
+    app: demo
+spec:
+  containers:
+    - name: redis
+      image: redis:latest
+      ports:
+        - containerPort: 6379         
+          protocol: TCP
+          
+            
+kubectl create -f redis.yml
+kubectl get pods  
+kubectl get pods -o wide
+kubectl describe pods redis
+
+kubectl exec -it redis /bin/bash
+kubectl delete pod redis
+*****************************************************************************
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-first-pod
+spec:
+  containers:
+  - name: my-nginx
+    image: nginx
+  - name: my-centos
+    image: centos
+    command: ["/bin/sh", "-c", "while : ;do curl http://localhost:80/; sleep 3; done"] 
+ 
+ my-first-pod.yml
+
+
+kubectl create -f my-first-pod.yml
+kubectl get pods
+kubectl get pods
+kubectl logs my-first-pod -c my-centos --tail=30 
+kubectl exec -it  my-first-pod -c my-nginx /bin/bash
+
+*******************************************************************************
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    app: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        
+        
+kubectl create -f nginx-rc.yml  --- Creating pod
+kubectl get rc
+kubectl get pods -o wide
+********************************************************************************
+Install The dashboard
+kubectl create -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+******************************************************************
+
+Step 1: Create admin user. Put below into service.yaml file.
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+name: admin-user
+namespace: kube-system
+
+kubectl apply -f service.yaml
+
+*********************************************************************
+step 2: Role already exists, let’s create ClusterRoleBinding. Here we use rbac.wuthorization.k8s.io but this may differ from older versions of kubernetes. Put below into rolebinding.yaml file.
+
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+ name: admin-user
+roleRef:
+ apiGroup: rbac.authorization.k8s.io
+ kind: ClusterRole
+ name: cluster-admin
+subjects:
+- kind: ServiceAccount
+ name: admin-user
+ namespace: kube-system
+And create the rolebinding account
+
+$kubectl apply -f rolebinding.yaml
+************************************************************************
+
+Step 3: Find the token for the admin user
+
+$kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+*********************************************************************
+
+Step 4. Run the proxy so that the dashboard can be accessed locally
+
+$kubectl proxy
+Now you can access the dashboard using the token from step 3 at
+
+http://localhost:8001/ui
+****************************************************************************
+------------------Summary of the commands-----------------------------------
+
+sudo apt-get update
+sudo apt-get install -y apt-transport-https
+sudo su -
+ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
+ cat <<EOF > /etc/apt/sources.list.d/kubernetes.list
+ > deb http://apt.kubernetes.io/ kubernetes-xenial main
+ > EOF
+ 
+ apt-get update
+ apt-get install -y docker.io
+ apt-get install -y kubelet kubeadm kubectl kubernetes-cni
+
+kubeadm init
+exit
+kubectl get node
+mkdir -p $HOME/.kube
+ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+ 
+kubectl get node
+kubectl get pods --all-namespaces
+
+Installing a CNI Network.
+sudo su -
+sysctl net.bridge.bridge-nf-call-iptables=1
+export kubever=$(kubectl version | base64 | tr -d '\n')
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
+exit
+kubectl get nodes
+
+install worker nodes, the first node
+ sudo su -
+ kubeadm join --token 844a02.ed299ddcbe17430a 172.31.49.128:6443 --discovery-token-ca-cert-hash sha256:17463c630785dd8685fdd7531389382ce302644db6c329197e20e271aab0bf32
+
+kubectl get nodes
+ 
+ kubectl get pods --all-namespaces
+ 
+ Join the second node to the Cluster. ssh into the slave node.
+ 
+ sudo su -
+ kubeadm join --token 844a02.ed299ddcbe17430a 172.31.49.128:6443 --discovery-token-ca-cert-hash sha256:17463c630785dd8685fdd7531389382ce302644db6c329197e20e271aab0bf32
+ kubectl get nodes
+ kubectl get pods --all-namespaces
+ kubectl run testing --image=nginx --replicas=3 deployment "testing" created

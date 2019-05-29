@@ -1,0 +1,375 @@
+*************************Ansible Playbook Automation******************
+************************************************************************************************************************************************
+How to Install Ansible on Ubuntu 16.0.4 instance?
+Here are the steps for installing Ansible on Ubuntu 16.0.4 instance:
+The best way to install Ansible for Ubuntu is to add the project's PPA (personal package archive) to your system. you can do it by executing the below command:
+
+sudo apt-add-repository -y ppa:ansible/ansible
+sudo apt-get update
+sudo apt-get install -y ansible
+sudo apt install python-pip -y
+sudo pip install boto
+sudo pip install boto3 
+sudo apt-get install python-boto -y
+pip list boto | grep boto
+ (the above command should display below output
+boto (2.49.0)
+boto3 (1.9.71)
+botocore (1.12.71)
+
+ansible --version
+
+**************************************************************************************************************************
+For accessing password less aunthication ----non-root-user.yml------------
+
+- hosts: all
+  become: yes
+  tasks:
+    - name: creating 'ubuntu' user
+      user: name=ubuntu append=yes state=present createhome=yes shell=/bin/bash
+
+    - name: 'ubuntu' for passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        line: 'ubuntu ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
+
+    - name: authorized keys for the ubuntu user
+      authorized_key: user=ubuntu key="{{item}}"
+      with_file:
+        - ~/.ssh/id_rsa.pub
+	
+*****************************************************************************************************************************
+create_user.yaml
+---
+- hosts: ssdnodes
+  remote_user: root
+
+  vars_prompt:
+
+    - name: "user_name"
+      prompt: "Enter a name for the new user"
+      private: no
+      confirm: yes
+
+    - name: "user_password"
+      prompt: "Enter a password for the new user"
+      private: yes
+      encrypt: "sha512_crypt"
+      confirm: yes
+      salt_size: 7
+
+  tasks:
+
+    - name: Check to make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+
+    - name: Install the 'sudo' package
+      yum:
+        name: sudo
+        state: latest
+
+    - name: Create the non-root user
+      user:
+        name: ""
+        password: ""
+        shell: "/bin/bash"
+        groups: "wheel"
+
+    - name: Add local public key for key-based SSH authentication
+      authorized_key:
+        user: ""
+        key: "{{item}}"
+      with_file:
+        - ~/.ssh/id_rsa.pub
+
+    - name: Restrict root SSH logins
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        state: present
+        regexp: '^#PermitRootLogin'
+        line: 'PermitRootLogin no'
+
+    - name: Restrict SSH logins to keys only
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        state: present
+        regexp: '^#PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+
+    - name: Restart sshd
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: sshd
+		
+--------------------VAR PROMPT-------------------------------------
+
+vars_prompt:
+
+  - name: "user_name"
+    prompt: "Enter a name for the new user"
+    private: no
+    confirm: yes
+
+  - name: "user_password"
+    prompt: "Enter a password for the new user"
+    private: yes
+    encrypt: "sha512_crypt"
+    confirm: yes
+    salt_size: 7
+	
+ansible-playbook create_user.yaml --ask-pass
+
+***********************************************************************************************************************************
+ Here below is ansible playbook to install Open JDK 8 on Ubuntu:
+
+---
+- hosts: Java_Group
+
+  tasks:
+  - name: Update APT package manager repositories cache
+    become: true
+    apt:
+      update_cache: yes
+
+  - name: Install OpenJDK Java
+    become: yes
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+     openjdk-8-jdk
+	 
+*******************************************************************
+Simple playbook that will install Nginx and a MySQL server 
+
+$ vi playbook.yml
+
+---
+- hosts: webservers
+  gather_facts: yes
+  become_user: root
+  tasks:
+  - name: Install Nginx
+    apt: pkg=nginx state=present
+    notify:
+    - restart nginx
+  - name: Enable Nginx during boot
+    service: name=nginx state=started enabled=yes
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted
+
+- hosts: dbservers
+  become_user: root
+  tasks:
+  - name: Install mysql
+    apt: pkg=mysql-server state=present
+
+************************************************************************
+
+Playbook for installing Maven on Ubuntu using Ansible Playbook
+
+sudo vi installMaven.xml
+---
+- hosts: Java_Group
+  tasks:
+    - name: install maven on your local Ubuntu machine
+      become: yes
+      apt: pkg={{ item }} state=latest update_cache=yes cache_valid_time=3600
+      with_items:
+        - maven
+
+
+sudo ansible-playbook installMaven.xml
+
+************************************************************************	 
+
+Find below Ansible playbook to install Java 8 on Ubuntu
+
+Step 1: Create the playbook first
+
+---
+- hosts: Java_Group
+
+  tasks:
+  - name: Update APT package manager repositories cache
+    become: true
+    apt:
+      update_cache: yes
+
+  - name: Install OpenJDK Java
+    become: yes
+    apt:
+      name: "{{ item }}"
+      state: present
+    with_items:
+     openjdk-8-jdk
+
+2. sudo vi /etc/ansible/hosts
+make sure you add below entry with target node IP changed (in red color).
+[Java_Group]   
+xx.xx.xx.xx ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa  ansible_python_interpreter=/usr/bin/python3
+
+3. sudo ansible-playbook installJava.xml
+
+now after successfully executing, enter below command in target node to make sure Java is installed:
+
+java -version
+
+****************************************************************************************************************
+
+Please find the Ansible Playbook for provisioning a new EC2 instance. Please follow the below steps in the machine where you installed Ansible.
+
+Steps to create Ec2 instance using Ansible:
+1. Login to AWS console, click on username and go to My security credentials. 
+2. Continue on security credentials, click on access keys
+3. Create a new access key if you dont have one. Make sure you download the keys.
+4. Login to EC2 instance using Git bash or ITerm where you installed Ansible,
+
+execute the below command and then enter the access keys and secret access keys as below: 
+sudo vi ~/.boto 
+
+add below three lines in the above file, replace the ?? with access key and secret key values:
+
+
+[Credentials]
+aws_access_key_id = ??
+aws_secret_access_key = ??
+
+
+
+5. Now edit the hosts file sudo vi /etc/ansible/hosts Add the below two lines in the end of the file:
+[localhost]
+local
+
+
+6. cd ~
+7. mkdir playbooks
+8. cd playbooks
+9. sudo vi create_jenkins_ec2.xml 
+copy the below content in green color.
+edit the create_jenkins_ec2.xml to make sure you update the key which is red marked below:
+
+---
+ - name:  provisioning EC2 Lab Exercises using Ansible
+   hosts: localhost
+   connection: local
+   gather_facts: False
+   tags: provisioning
+
+   vars:
+     keypair: MyinfraCodeKey
+     instance_type: t2.micro
+     image: ami-916f59f4
+     wait: yes
+     group: webserver
+     count: 1
+     region: us-east-2
+     security_group: jenkins-security-group
+   
+   tasks:
+
+     - name: Create a security group
+       local_action: 
+         module: ec2_group
+         name: "{{ security_group }}"
+         description: Security Group for webserver Servers
+         region: "{{ region }}"
+         rules:
+            - proto: tcp
+              from_port: 22
+              to_port: 22
+              cidr_ip: 0.0.0.0/0
+            - proto: tcp
+              from_port: 8080
+              to_port: 8080
+              cidr_ip: 0.0.0.0/0
+            - proto: tcp
+              from_port: 80
+              to_port: 80
+              cidr_ip: 0.0.0.0/0
+            - proto: tcp
+              from_port: 443
+              to_port: 443
+              cidr_ip: 0.0.0.0/0
+         rules_egress:
+            - proto: all
+              cidr_ip: 0.0.0.0/0
+       register: basic_firewall
+     
+     - name: Launch the new EC2 Instance
+       local_action:  ec2 
+                      group={{ security_group }} 
+                      instance_type={{ instance_type}} 
+                      image={{ image }} 
+                      wait=true 
+                      region={{ region }} 
+                      keypair={{ keypair }}
+                      count={{count}}
+       register: ec2
+
+     - name: Add the newly created EC2 instance(s) to the local host group
+       local_action: lineinfile
+                     dest="/etc/ansible/hosts"
+                     regexp={{ item.public_ip }}
+                     insertafter="[webserver]" line={{ item.public_ip }}
+       with_items: "{{ ec2.instances }}"
+     - name: Add tag to Instance(s)
+       local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
+       with_items: "{{ ec2.instances }}"
+       args:
+         tags:
+           Name: MyEc2Instance
+
+10. now execute the ansible playbook by
+sudo ansible-playbook create_jenkins_ec2.xml
+
+
+11. if everything is good, you should see the new instance on AWS console. make sure you are able to connect to that instance. 
+12. It will also make an entry in hosts file as well.
+
+*********************************************************************************************************************************
+
+Terminate EC2 Ansible Playbook Example - How to terminate EC2 using Ansible playbook
+
+Creating EC2 instance using Ansbile on AWS is muich easier than terminating EC2. Please find a simple playbook for terminating EC2 instance using EC2 instance id.
+
+Create playbook by executing below command:
+
+sudo vi terminate.xml  
+---
+ - name: ec2 provisioning using Ansible
+   hosts: local
+   connection: local
+   gather_facts: False
+
+ - hosts: local
+   gather_facts: False
+   connection: local
+   vars:
+     - region: 'us-east-2'    
+     - ec2_id: 'i-05f39cfb80c97df38'
+   tasks:
+     - name: Terminate instances
+       local_action: ec2
+         state='absent'
+         instance_ids='{{ ec2_id }}'
+         region='{{ region }}'
+         wait=True
+
+
+This playbook can be executed by two ways. Either mention instance ID in the ansible playbook or pass as an argument. Intstance Id can be taken from AWS mgmt console.
+
+ansible-playbook terminate.xml 
+
+or by passing EC2_id from command line.
+
+ansible-playbook terminate.xml -e ec2_id=i-xxxx
+
+***********************************************************************************************************************************************
+Refer below link for more details:
+https://www.cidevops.com/search/label/Ansible

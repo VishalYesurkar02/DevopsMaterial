@@ -1,0 +1,112 @@
+**********Jenkins job DSL With Docker Build and Publish**************
+docker pull vishal0212/nodejs-example01
+    2  docker pull vishal0212/nodejs-exmaple01
+    3  docker images
+    4  curl localhost:3000
+    5  dcoker ps
+    6  docker ps
+    7  docker run -p 3000:3000 -d -name newnodejs-app vishal0212/nodejs-example01
+    8  docker run -p 3000:3000 -d --name newnodejs-app vishal0212/nodejs-example01
+    9  docker images
+   10  docker run -p 3000:3000 -d --name demonode vishal0212/nodejs-exmaple01
+   11  docker ps
+   12  curl localhost:3000
+   13  history
+   14  sudo apt-get update
+   15  sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+   16  sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+   17  sudo apt-get install -y docker-engine
+   18  sudo systemctl enable docker
+   19  sudo mkdir -p /var/jenkins_hom
+   20  sudo mkdir -p /var/jenkins_home
+   21  sudo chown -R 1000:1000 /var/jenkins_home/
+   22  docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home --name jenkins -d jenkins/jenkins:lts
+   23  cat /var/jenkins_home/secrets/initialAdminPassword
+   24  docker images
+   25  docker ps
+   26  cd /var/lib/
+   27  ll
+   28  cd ..
+   29  cd jenkins_home/workspace/
+   30  ls
+   31  cd Nodejs-Example/
+   32  LL
+   33  ll
+   34  docker ps -a
+   35  git clone https://github.com/wardviaene/jenkins-docker.git
+   36  cd jenkins-docker/
+   37  docker build -t jenkins-docker .
+   38  docker stop jenkins
+   39  docker rm jenkins
+   40  ls /var/jenkins_home/
+   41  docker run -p 8080:8080 -p 5000:5000 -v /var/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins -d jenkins-docker
+   42  docker ps -a
+   43  docker exec -it jenkins bash
+   44  systemctl jenkins start
+   45  service jenkins start
+   46  docker ps -a
+   47  docker imagers
+   48  docker imaages
+   49  docker images
+   50  docker run -p 80:8080 jenkins
+   51  docker exec -it 77634924a6ca bash
+   52  cd /var/jenkins_home/workspace/NodeJS Docker example
+   53  cd /var/jenkins_home/workspace/
+   54  ls
+   55  cd NodeJS\ Docker\ example/
+   56  ls
+   57  vi Dockerfile
+   58  v
+   59  vi Dockerfile
+   60  cat Dockerfile
+   61  git push Dockerfile
+   62  cay Dockerfile
+   63  cat Dockerfile
+   64  jenkins.exe start
+   65  sudo service jenkins start
+   66  sudo mkdir -p /var/jenkins_home
+   67  sudo chown -R 1000:1000 /var/jenkins_home/
+   68  docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home --name jenkins -d jenkins/jenkins:lts
+   69  cat /var/jenkins_home/secrets/initialAdminPassword
+   70  docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home --name jenkins -d jenkins/jenkins:lts
+   71  docker run --help
+   72  docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home --name jenkins -d jenkins/jenkins:lts
+   73  docker images
+   74  docker rm 15625611d6fb
+   75  docker ps
+   76  docker run -p 8080:8080 -p
+   77  docker ps -a
+   78  docker stop 99b4946b7c2c
+   79  docker stop 91bc01a474e2
+   80  docker stop f3d21c16979c
+   81  docker ps -a
+   82  docker rm 15625611d6fb
+   83  docker rmi 15625611d6fb
+   84  docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home --name jenkins -d jenkins/jenkins:lts
+   85  docker system prune
+   86  docker container ls -a
+   87  docker container rm f3d21c16979c 99b4946b7c2c
+   88  docker container ls -a
+   89  docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home --name jenkins -d jenkins/jenkins:lts
+   90  docker exec -it 77634924a6ca bash
+   91  docker ps
+   92  docker exec -it 77634924a6ca
+   93  docker exec -it 77634924a6ca bash
+
+   1    1  ls -ahl /var/run/docker.sock
+    2  exit
+    3  cd /var/jenkins_home/
+    4  cd workspace/Nodejs-Example/
+    5  ls -ahl
+    6  find ~ -name 'npm'
+   11  export PATH=$PATH:/var/jenkins_home/tools/jenkins.plugins.nodejs.tools.NodeJSInstallation/nodejs/bin
+   12  echo $PATH
+   13  npm start
+   14  ls
+   15  history
+   *****
+    docker ps -a
+ 105 docker commit 224320143d68 vishal0212/ubuntu-git
+ 106 docker images
+ 107 docker push vishal0212/ubuntu-git
+

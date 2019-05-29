@@ -1,0 +1,168 @@
+To run Remote kubectl and access the pods through remotely
+1. mkdir -p $HOME/.kube ----copy id_rsa.pub to authorized-keys of master machine and paste the key then use sftp command to copy config the file to the location
+2. sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+3. sudo chown $(id -u):$(id -g) $HOME/.kube/config
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
+vi /etc/apt/sources.list.d/kubernetes.list
+deb http://apt.kubernetes.io/ kubernetes-xenial main
+
+command used to access remote
+
+   24  mkdir -p $HOME/.kube
+   25  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   26  cd /etc/
+   27  ls
+   28  cd ..
+   29  cd ~
+   30  cd .kube/
+   31  ls
+   32  vi config
+   33  cat config
+   34  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+   35  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add
+   36  vi /etc/apt/sources.list.d/kubernetes.list
+   37  sudo apt-get update -y
+   38  sudo apt-get install -y kubectl
+   39  history
+   40  kubectl get pods
+   41  cd /root/.ssh/
+   42  ls
+   43  ssh key-gen
+   44  ssh-keygen
+   45  lsc
+   46  ls
+   47  cat id_rsa.pub
+   48  sftp root@172.31.20.158
+   49  ls
+   50  cp admin.conf ../.kube/.
+   51  ls
+   52  cd ../.kube/
+   53  ls
+   54  rm config
+   55  mv admin.conf config
+   56  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+   57  kubectl get pods
+   58  history
+   
+   ******************************************************************
+   
+---------Service--------------------------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodehelloworld.example.com
+  labels:
+    app: helloworld
+spec:
+  containers:
+  - name: k8s-demo
+    image: wardviaene/k8s-demo
+    ports:
+    - name: nodejs-port
+      containerPort: 3000
+
+
+--------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-service
+spec:
+  ports:
+  - port: 31001
+    nodePort: 31001
+    targetPort: nodejs-port
+    protocol: TCP
+  selector:
+    app: helloworld
+  type: NodePort
+ 
+kubectl create -f helloworld.yml
+kubectl create -f helloworld-nodeport-service.yml
+
+kubectl get pods --all-namespaces ------
+
+
+
+=============my-calc.yml============================
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: my-calc-rc
+spec:
+  replicas: 2
+  selector:
+        app: my-calc
+  template:
+    metadata:
+      labels:
+        app: my-calc
+    spec:
+      containers:
+      - name: my-calc
+        image: hidetosaito/my-calc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-calc-service
+
+spec:
+  ports:
+    - protocol: TCP
+      port: 5000
+  type: ClusterIP
+  selector:
+     app: my-calc
+
+==================my-frontend.yaml=========================================
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: my-frontend-rc
+spec:
+  replicas: 2
+  selector:
+        app: my-frontend
+  template:
+    metadata:
+      labels:
+        app: my-frontend
+    spec:
+      containers:
+      - name: my-frontend
+        image: hidetosaito/my-frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-frontend-service
+
+spec:
+  ports:
+    - protocol: TCP
+      port: 5000
+      nodePort: 30080
+  type: NodePort
+  selector:
+     app: my-frontend
+
+
+
+kubectl create -f my-calc.yaml
+kubectl create -f my-frontend.yaml 
+
+****************************************
+for Deleting pods
+kubectl delete pods <pod>
+kubectl delete pods <pod> --grace-period=0 --force   ***forcefull delete
+******Delete pods from container*****
+ kubectl get nodes
+   70  kubectl get pods
+   71  kubectl patch pod my-calc-rc-dj85r my-calc-rc-kp78l my-frontend-rc-m76ff my-frontend-rc-wqqzn -p '{"metadata":{"finalizers":null}}'
+   72  kubectl get pods
+   73  kubectl get rc
+   74  kubectl delete rs my-calc-rc my-frontend-rc
+   75  kubectl delete rc my-calc-rc my-frontend-rc
+   76  kubectl get pods
+
