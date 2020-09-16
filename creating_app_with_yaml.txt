@@ -1,0 +1,55 @@
+Create Application from YAML Files
+**httpd-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-deployment
+spec:
+  selector:
+    matchLabels:
+      app: httpd
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: httpd
+    spec:
+      containers:
+      - name: httpd
+        image: image-registry.openshift-image-registry.svc:5000/openshift/httpd
+        ports:
+        - containerPort: 8080
+		
+**$ oc create -f httpd-deployment.yaml
+
+**httpd-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpd-deployment
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: httpd
+  type: ClusterIP
+  
+ ***oc create -f httpd-service.yaml
+ 
+ **httpd-route.yaml
+ 
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: httpd-deployment
+spec:
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: httpd-deployment
+	
+**$ oc delete project $GUID-openshift-tools
+$ oc delete project $GUID-yaml-app
